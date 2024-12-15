@@ -1,0 +1,39 @@
+name: Deploy to Gamma
+
+# Trigger the workflow on pushes to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-to-gamma:
+    name: Deploy to Gamma Environment
+    runs-on: ubuntu-latest
+
+    # Map this job to the gamma environment
+    environment:
+      name: gamma
+      url: https://gamma.example.com  # Optional: Provide an environment URL
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up the environment (install dependencies, etc.)
+      - name: Set up Dependencies
+        run: |
+          echo "Setting up dependencies..."
+          # Example: Install dependencies for your application
+          # npm install, pip install -r requirements.txt, etc.
+
+      # Step 3: Deploy to Gamma
+      - name: Deploy to Gamma
+        env:
+          API_KEY: ${{ secrets.GAMMA_API_KEY }} # Use the secret from the gamma environment
+        run: |
+          echo "Deploying to Gamma..."
+          # Replace the following with your actual deployment logic
+          # Example: Trigger a deployment script or API
+          ./deploy-to-gamma.sh
